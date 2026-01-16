@@ -28,11 +28,11 @@ npm install apiro-db
 ## Usage
 
 ```js
-const { SecureStore } = require("apiro-db");
+import { SecureStore } from "apiro-db";
 
 const db = new SecureStore({
   file: "./data.db",
-  secret: process.env.DB_SECRET
+  secret: 'YOUR_KEY_HERE'
 });
 
 await db.set("coins", 100);
