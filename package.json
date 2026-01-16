@@ -1,6 +1,6 @@
 {
   "name": "apiro-db",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A lightweight, zero-dependency, encrypted data store for Node.js.",
   "main": "index.js",
   "scripts": {
@@ -8,5 +8,11 @@
   },
   "keywords": [],
   "author": "krispowers",
-  "license": "ISC"
+  "license": "ISC",
+  "files": [
+    "Readme.md",
+    "index.js",
+    "lib/",
+    "LICENSE"
+  ]
 }
