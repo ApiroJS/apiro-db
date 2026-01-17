@@ -2,7 +2,7 @@
 
 A lightweight, zero-dependency, encrypted data store for Node.js.
 
-Secure Store provides a simple key-value database similar to Quick.db, while removing all third-party dependencies and keeping your data encrypted at rest using Node’s built-in cryptography.
+No configuration. No secrets. Just import and use.
 
 ---
 
@@ -11,7 +11,8 @@ Secure Store provides a simple key-value database similar to Quick.db, while rem
 * Zero dependencies
 * Fully asynchronous API
 * AES-256-GCM encrypted storage
-* User-supplied encryption key
+* Automatic key generation
+* Machine-bound encryption
 * Human-unreadable data at rest
 * Simple, familiar database methods
 
@@ -31,8 +32,7 @@ npm install apiro-db
 import { SecureStore } from "apiro-db";
 
 const db = new SecureStore({
-  file: "./data.db",
-  secret: 'YOUR_KEY_HERE'
+  file: "./data.db", // Optional
 });
 
 await db.set("coins", 100);
