@@ -49,10 +49,6 @@ console.log(await db.get("coins")); // 125
 | Option   | Type   | Required | Description                         |
 | -------- | ------ | -------- | ----------------------------------- |
 | `file`   | string | No       | Path to the encrypted data file     |
-| `secret` | string | Yes      | Encryption key provided by the user |
-
-> **Important:**
-> Losing the secret key will permanently lock access to the data.
 
 ---
 
