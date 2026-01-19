@@ -1,6 +1,6 @@
 {
   "name": "apiro-db",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "description": "A lightweight, zero-dependency, encrypted data store for Node.js.",
   "main": "index.js",
   "scripts": {
