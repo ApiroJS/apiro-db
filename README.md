@@ -2,7 +2,7 @@
 
 A **fast**, **dependency-free**, **encrypted**, file-backed data store for Node.js.
 
-Apiro DB is designed as a lightweight alternative to packages like `quick.db`, without pulling in heavy native dependencies such as SQLite. All data is stored **encrypted at rest**, kept **in-memory for speed**, and written to disk using a **write-behind engine** for optimal performance.
+Apiro DB is designed as a lightweight alternative to industry standard packages, without pulling in heavy native dependencies such as SQLite. All data is stored **encrypted at rest**, kept **in-memory for speed**, and written to disk using a **write-behind engine** for optimal performance.
 
 ---
 
