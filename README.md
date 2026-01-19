@@ -78,6 +78,10 @@ Subtracts a number from a value.
 
 Pushes a value onto an array.
 
+### `has(key, value) or has(key)`
+
+Checks for a value in a directory, or for the directory itself.
+
 ---
 
 ## Security
