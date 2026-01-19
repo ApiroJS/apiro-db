@@ -1,24 +1,26 @@
 # Apiro DB
 
-A lightweight, zero-dependency, encrypted data store for Node.js.
+A **fast**, **dependency-free**, **encrypted**, file-backed data store for Node.js.
 
-No configuration. No secrets. Just import and use.
-
----
-
-## Features
-
-* Zero dependencies
-* Fully asynchronous API
-* AES-256-GCM encrypted storage
-* Automatic key generation
-* Machine-bound encryption
-* Human-unreadable data at rest
-* Simple, familiar database methods
+Apiro DB is designed as a lightweight alternative to packages like `quick.db`, without pulling in heavy native dependencies such as SQLite. All data is stored **encrypted at rest**, kept **in-memory for speed**, and written to disk using a **write-behind engine** for optimal performance.
 
 ---
 
-## Installation
+## ✨ Features
+
+* 🔐 **Encrypted at rest** (AES-based, Node crypto only)
+* 🚀 **In-memory reads and writes** (sub-millisecond)
+* 🧠 **Write-behind disk persistence** (debounced)
+* 🧩 **Path-based access** (`"users.123.profile.name"`)
+* 🪶 **Zero runtime dependencies**
+* ⚙️ **Async-only API**
+* 🔑 **Automatically generated master key**
+* 📁 **Single-file database**
+* 🧼 **Simple, predictable API**
+
+---
+
+## 📦 Installation
 
 ```bash
 npm install apiro-db
@@ -26,82 +28,184 @@ npm install apiro-db
 
 ---
 
-## Usage
+## 🚀 Quick Start
 
 ```js
-import { SecureStore } from "apiro-db";
+const { apiro-db } = require("apiro-db");
 
-const db = new SecureStore({
-  file: "./data.db", // Optional
+const db = new apiro-db({
+  file: "./data.db"
 });
 
-await db.set("coins", 100);
-await db.add("coins", 25);
-await db.push("items", "shield");
+await db.set("users.1.name", "Alice");
+await db.add("users.1.balance", 50);
 
-console.log(await db.get("coins")); // 125
+console.log(await db.get("users.1"));
+// { name: 'Alice', balance: 50 }
 ```
 
 ---
 
-## Configuration
+## 🗂 Path-Based Storage
 
-| Option   | Type   | Required | Description                         |
-| -------- | ------ | -------- | ----------------------------------- |
-| `file`   | string | No       | Path to the encrypted data file     |
+All keys are treated as **paths by default**.
 
----
+```js
+await db.set("pages.404.title", "Page Not Found");
+await db.set("pages.404.content", "<h1>404</h1>");
 
-## API Reference
+await db.get("pages.404.title");
+// "Page Not Found"
+```
 
-### `get(key)`
-
-Returns the value stored under the key.
-
-### `set(key, value)`
-
-Sets a value for the key.
-
-### `delete(key)`
-
-Deletes a key and returns `true` if it existed.
-
-### `add(key, number)`
-
-Adds a number to an existing numeric value.
-
-### `subtract(key, number)`
-
-Subtracts a number from a value.
-
-### `push(key, value)`
-
-Pushes a value onto an array.
-
-### `has(key, value) or has(key)`
-
-Checks for a value in a directory, or for the directory itself.
+Nested objects are created automatically when missing.
 
 ---
 
-## Security
+## 📘 API Reference
 
-* Uses AES-256-GCM authenticated encryption
-* Key derivation via `scrypt`
-* Tamper detection built in
-* No plaintext data stored on disk
-* No external crypto dependencies
+### `new Apiro DB(options)`
 
----
+```js
+const db = new apiro-db({
+  file: "./secure.db" // optional
+});
+```
 
-## Limitations
-
-* Single-file storage
-* Not designed for concurrent multi-process writes
-* Entire store is encrypted as a single unit
+| Option | Description        | Default       |
+| ------ | ------------------ | ------------- |
+| `file` | Database file path | `./secure.db` |
 
 ---
 
-## License
+### `await db.get(path)`
+
+Returns the value at the given path.
+
+```js
+await db.get("settings.theme");
+```
+
+---
+
+### `await db.set(path, value)`
+
+Sets a value at the given path.
+
+```js
+await db.set("settings.theme", "dark");
+```
+
+---
+
+### `await db.has(path)`
+
+Checks if a path exists.
+
+```js
+await db.has("users.123"); // true / false
+```
+
+---
+
+### `await db.delete(path)`
+
+Deletes a value at the given path.
+
+```js
+await db.delete("sessions.old");
+```
+
+Returns `true` if the value existed.
+
+---
+
+### `await db.add(path, number)`
+
+Adds a number to the existing value (or initializes to `0`).
+
+```js
+await db.add("stats.visits", 1);
+```
+
+---
+
+### `await db.subtract(path, number)`
+
+Subtracts a number from the existing value.
+
+```js
+await db.subtract("stats.visits", 1);
+```
+
+---
+
+### `await db.push(path, value)`
+
+Pushes a value into an array (or initializes one).
+
+```js
+await db.push("logs", { event: "login" });
+```
+
+---
+
+### `await db.close()`
+
+Forces a final write to disk. Useful on shutdown.
+
+```js
+await db.close();
+```
+
+---
+
+## 🔐 Security Model
+
+* A **256-bit master key** is generated automatically on first run
+* The master key is **encrypted and stored inside the database**
+* All data payloads are encrypted using the master key
+* No plaintext data is ever written to disk
+* No user-supplied keys required
+
+If the database file is copied or stolen, its contents remain unreadable.
+
+---
+
+## ⚡ Performance Model
+
+* Reads and writes operate **entirely in memory**
+* Disk writes are **debounced and batched**
+* Encryption occurs **only on flush**
+* Typical read/write latency: **sub-millisecond**
+* Disk writes: **~50ms debounce window**
+
+### Optional micro-optimization (already applied)
+
+Path handling is always routed through internal helpers (`getByPath`, `setByPath`, `deleteByPath`) with **no conditional branching**, ensuring consistent hot-path performance.
+
+---
+
+## 🧠 Design Philosophy
+
+Apiro DB prioritizes:
+
+* Predictable behavior
+* Minimal surface area
+* No native dependencies
+* Clear ownership of data
+* Explicit async boundaries
+
+It is ideal for:
+
+* Bots
+* Small services
+* Internal tools
+* Local state persistence
+* Secure configuration storage
+
+---
+
+## 📄 License
 
 MIT

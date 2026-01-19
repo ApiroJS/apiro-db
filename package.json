@@ -1,6 +1,6 @@
 {
   "name": "apiro-db",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A lightweight, zero-dependency, encrypted data store for Node.js.",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,13 @@
   "keywords": ["database", "storage", "encryption", "secure"],
   "author": "krispowers",
   "license": "MIT",
+  "contributors": [
+    {
+      "name": "Kris Powers",
+      "githubUsername": "krispowers",
+      "url": "https://github.com/KrisPowers"
+    }
+  ],
   "files": [
     "Readme.md",
     "index.js",
