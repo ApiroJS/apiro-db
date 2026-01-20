@@ -31,9 +31,9 @@ npm install apiro-db
 ## 🚀 Quick Start
 
 ```js
-const { apiro-db } = require("apiro-db");
+import { SecureStore } from "apiro-db";
 
-const db = new apiro-db({
+const db = new SecureStore({
   file: "./data.db"
 });
 
@@ -64,10 +64,10 @@ Nested objects are created automatically when missing.
 
 ## 📘 API Reference
 
-### `new Apiro DB(options)`
+### `new SecureStore(options)`
 
 ```js
-const db = new apiro-db({
+const db = new SecureStore({
   file: "./secure.db" // optional
 });
 ```

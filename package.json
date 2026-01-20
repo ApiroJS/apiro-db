@@ -1,12 +1,17 @@
 {
   "name": "apiro-db",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A lightweight, zero-dependency, encrypted data store for Node.js.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["database", "storage", "encryption", "secure"],
+  "keywords": [
+    "database",
+    "storage",
+    "encryption",
+    "secure"
+  ],
   "author": "krispowers",
   "license": "MIT",
   "contributors": [
